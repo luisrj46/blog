@@ -12,9 +12,11 @@ class Pos extends Model
 
     protected $table = 'pos';
 
+
     protected $fillable = [
         'title',
         'body',
+        'url',
         'excerpt',
         'published_at'
     ];
@@ -38,6 +40,11 @@ class Pos extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function photos()
+    {
+        return $this->hasMany(Photo::class);
     }
 
     public function scopePublished($query)

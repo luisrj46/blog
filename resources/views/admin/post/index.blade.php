@@ -19,7 +19,8 @@
 @section('contentt')
 <div class="card">
     <div class="card-header">
-      <h3 class="card-title">DataTable with default features</h3>
+      <h3 class="card-title">Listado de Publicaciones</h3>
+      <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal-crear-post"><i class="fas fa-plus px-1"></i>Crear Publicacion</button>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -41,7 +42,7 @@
                     <td>{{$post->excerpt}}</td>
                     <td>
                         <a href="#" class="btn btn-xs btn-warning"><i class="fas fa-eye"></i></a>
-                        <a href="#" class="btn btn-xs btn-info"><i class="fas fa-pencil-alt"></i></a>
+                        <a href="{{ route('admin.post.edit', [$post]) }}" class="btn btn-xs btn-info"><i class="fas fa-pencil-alt"></i></a>
                         <a href="#" class="btn btn-xs btn-danger"><i class="fas fa-times"></i></a>
                     </td>
                 </tr>
@@ -56,6 +57,7 @@
   @endsection
 
 @push('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css">
 <link rel="stylesheet" href={{ asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}>
 <link rel="stylesheet" href={{ asset('admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}>
 <link rel="stylesheet" href={{ asset('admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}>
@@ -63,6 +65,7 @@
 @endpush
 
 @push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
     <!-- DataTables  & Plugins -->
 <script src={{ asset('admin/plugins/datatables/jquery.dataTables.min.js')}}></script>
 <script src={{ asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}></script>
@@ -78,15 +81,15 @@
 <script src={{ asset('admin/plugins/datatables-buttons/js/buttons.colVis.min.js')}}></script>
 <script>
     $(function () {
-      $('#table-post').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-      });
+        $("#table-post").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    Dropzone.options.myAwesomeDropzone = {
+    paramName: "file", // Las imágenes se van a usar bajo este nombre de parámetro
+    maxFilesize: 2 // Tamaño máximo en MB
+};
+
     });
   </script>
 @endpush

@@ -23,13 +23,13 @@ class DatabaseSeeder extends Seeder
         Category::factory(5)->create();
 //
         // Pos::truncate();
-        Pos::factory(3)->create();
+        Pos::factory(15)->create();
 
         // Tag::truncate();
         Tag::factory(5)->create();
 
         // PosTag::truncate();
-        PosTag::factory(6)->create();
+        PosTag::factory(25)->create();
 
         $user=new User();
         $user->name="juan de Dios";

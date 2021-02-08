@@ -1,7 +1,49 @@
 @extends('layouts.header')
+@section('meta-title')
+{{$post->title}}
+@endsection
+@section('meta-description')
+{{Str::limit($post->excerpt, 145,'.')}}
+@endsection
 @section('content')
 <article class="post image-w-text container">
-    <div class="content-post">
+    @if ($post->photos->count()===1)
+    <figure><img src="{{$post->photos->first()->url}}" alt="" class="img-responsive">
+    </figure>
+    @elseif($post->photos->count()>1)
+    <div   id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @foreach ($post->photos as $photo)
+                <li data-target="#carouselExampleIndicators" data-slide-to="{{$loop->iteration-1}}" class="{{$loop->iteration===1?'active':''}}"></li>
+            @endforeach
+
+        {{-- <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> --}}
+        </ol>
+
+        <div class="carousel-inner">
+            @foreach ($post->photos as $photo)
+            <div class="carousel-item {{$loop->iteration===1?'active':''}}">
+                <img class="d-block w-100" src="{{url($photo->url)}}" alt="First slide">
+            </div>
+            @endforeach
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-custom-icon" aria-hidden="true">
+            <i class="fas fa-chevron-left"></i>
+          </span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-custom-icon" aria-hidden="true">
+            <i class="fas fa-chevron-right"></i>
+          </span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    @endif
+
+      <div class="content-post">
       <header class="container-flex space-between">
         <div class="date">
           <span class="c-gris">{{$post->published_at->format('M d')}}</span>
@@ -19,21 +61,7 @@
           </div>
         </div>
 
-        <footer class="container-flex space-between">
-          <div class="buttons-social-media-share">
-            <ul class="share-buttons">
-              <li><a href={{"https://www.facebook.com/sharer/sharer.php?u=&t="}} title="Share on Facebook" target="_blank"><img alt="Share on Facebook" src={{asset('img/flat_web_icon_set/Facebook.png')}}></a></li>
-              <li><a href="https://twitter.com/intent/tweet?source=&text=:%20" target="_blank" title="Tweet"><img alt="Tweet" src={{asset('img/flat_web_icon_set/Twitter.png')}}></a></li>
-              <li><a href="https://plus.google.com/share?url=" target="_blank" title="Share on Google+"><img alt="Share on Google+" src={{asset('img/flat_web_icon_set/Google+.png')}}></a></li>
-              <li><a href="http://pinterest.com/pin/create/button/?url=&description=" target="_blank" title="Pin it"><img alt="Pin it" src={{asset('img/flat_web_icon_set/Pinterest.png')}}></a></li>
-            </ul>
-          </div>
-          <div class="tags container-flex">
-              @foreach ($post->tags as $tag)
-                <span class="tag c-gris">#{{$tag->name}}</span>
-              @endforeach
-          </div>
-      </footer>
+        @include('partials.social-media',['descripcion'=>$post->title])
       <div class="comments">
       <div class="divider"></div>
         <div id="disqus_thread"></div>
@@ -44,7 +72,16 @@
 		    </div>
   </article>
 @endsection
-
+@push('stylos')
+<link rel="stylesheet" href={{asset('admin/dist/css/adminlte.min.css')}}>
+@endpush
+@push('scriptt')
+<script src={{asset('admin/plugins/jquery/jquery.min.js')}}></script>
+<!-- Bootstrap 4 -->
+<script src={{asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}></script>
+@endpush
 @push('scripts')
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <!-- jQuery -->
+
 @endpush

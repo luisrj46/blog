@@ -17,11 +17,11 @@ class CreatePosTable extends Migration
             $table->id();
             $table->string('title');
             $table->mediumText('url');
-            $table->mediumText('excerpt');
-            $table->text('body');
-            $table->unsignedBigInteger('category_id');
+            $table->mediumText('excerpt')->nullable();
+            $table->longText('body')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->timestamp('published_at')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->nullable();
             $table->timestamps();
         });
     }

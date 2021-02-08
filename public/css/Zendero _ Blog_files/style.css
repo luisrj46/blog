@@ -120,7 +120,7 @@ cite .img-cite,
 }
 
 .image-w-text div {
-    max-width: 100%;
+    max-width: 720px;
 }
 
 .image-w-text span.cite-2,
@@ -338,14 +338,8 @@ a.btn-bar {
     align-items: center;
     width: 100%;
     height: 100%;
-    top: -100%;
-    position: relative;
+    position: absolute;
     color: white;
     font-size: 30px;
     background-color: rgba(0, 0, 0, .7);
 }
-
-
-/* .gallery-photos {
-    overflow: hidden;
-} */

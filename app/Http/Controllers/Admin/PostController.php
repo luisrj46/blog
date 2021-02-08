@@ -25,10 +25,30 @@ class PostController extends Controller
         return view('admin.post.create',compact('categorias','etiquetas'));
     }
 
-    public function store(PostStoreResquest $request)
+    function store(Request $request)
+    {
+        $this->validate($request,['title'=>'required']);
+
+        $post=Pos::create([
+                        'url' => Str::slug($request->get('title')),
+                        'title' => $request->get('title'),
+                        ]);
+            // dd($post);
+        return redirect()->route('admin.post.edit',[$post]);
+    }
+
+    public function edit(Pos $post)
+    {
+        $etiquetas=Tag::all();
+        $categorias=Category::all();
+        return view('admin.post.edit',compact('post','etiquetas','categorias'));
+    }
+
+
+
+    public function update(Pos $post,PostStoreResquest $request)
     {
         // return $request->all();
-        $post=new Pos();
         $post->title=$request->get('title');
         $post->url=Str::slug($request->get('title'));
         $post->body=$request->get('body');
@@ -37,8 +57,8 @@ class PostController extends Controller
         $post->category_id=$request->get('category_id');
         $post->save();
 
-        $post->tags()->attach($request->get('tags'));
+        $post->tags()->sync($request->get('tags'));
 
-        return back()->with('flash', 'Tu publicacion ha sido Creada');
+        return redirect()->route('admin.post.edit',[$post])->with('flash', 'Tu publicacion ha sido Guardads');
     }
 }

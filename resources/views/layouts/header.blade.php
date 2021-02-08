@@ -4,7 +4,8 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>Zendero</title>
+    <title>@yield('meta-title', config('app.name'). " | Blog")</title>
+    <meta name="description" content="@yield('meta-description', 'Este es un blog de Zendero')">
 	<link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/framework.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -12,6 +13,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     @stack('scripts')
+    @stack('stylos')
 </head>
 <body>
 	<div class="preload"></div>
@@ -56,4 +58,7 @@
 				</ul>
 			</div>
 		</footer>
-	</section>
+    </section>
+    @stack('scriptt')
+</body>
+</html>

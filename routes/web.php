@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\PostController as AdminPost;
+use App\Http\Controllers\Admin\PhotosController as AdminPhotos;
 use App\Http\Controllers\PosController;
+use App\Models\Photo;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +24,11 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/post', [AdminPost::class, 'index'])->name('admin.post.index');
     Route::get('/post.crear', [AdminPost::class, 'create'])->name('admin.post.crear');
     Route::post('/post', [AdminPost::class, 'store'])->name('admin.post.store');
+    Route::get('/post/{post}', [AdminPost::class, 'edit'])->name('admin.post.edit');
+    Route::put('/post/{post}', [AdminPost::class, 'update'])->name('admin.post.update');
+    Route::post('/posts/{post}/photos', [AdminPhotos::class, 'store'])->name('admin.post.photos.store');
+
+    Route::delete('/posts/{photo}', [AdminPhotos::class, 'destroy'])->name('admin.photo.destroy');
         // Matches The "/admin/users" URL
 });
 

@@ -3,8 +3,25 @@
 
 	<section class="posts container">
         @foreach ($posts as $post)
+		<article class="post conteiner a11y-speak-region">
+            @if ($post->photos->count()===1)
+                <figure><img src="{{$post->photos->first()->url}}" alt="" class="img-responsive"></figure>
+            @elseif($post->photos->count()>1)
+                <div class="gallery-photos" data-masonry='{"itemSelector":"grid-item","columWhidth":"464"}'>
+					@foreach ($post->photos->take(4) as $photos)
 
-		<article class="post no-image">
+                        <figure class="grid-item grid-item--height2">
+
+
+                            <img class="img-responsive" src="{{url($photos->url)}}" alt="">
+                            @if ($loop->iteration ===4 )
+                            <div class="overlay">{{$post->photos->count()}} Fotos</div>
+                            @endif
+						</figure>
+
+                    @endforeach
+                </div>
+            @endif
 			<div class="content-post">
 				<header class="container-flex space-between">
 					<div class="date">

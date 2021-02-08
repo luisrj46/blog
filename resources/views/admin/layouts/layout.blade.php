@@ -267,6 +267,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- AdminLTE App -->
 <script src={{ asset('admin/dist/js/adminlte.min.js') }}></script>
 @stack('scripts')
-
+@include('admin.post.create')
 </body>
 </html>

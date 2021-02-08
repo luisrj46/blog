@@ -27,7 +27,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('admin.post.crear') }}" class="nav-link {{request()->is('admin/post.crear')?'active':''}}">
+            <a href="#" data-toggle="modal" data-target="#modal-crear-post" class="nav-link {{request()->is('admin/post.crear')?'active':''}}">
               <i class="far fa-edit nav-icon"></i>
               <p>Crear</p>
             </a>
