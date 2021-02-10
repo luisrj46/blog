@@ -8,11 +8,11 @@
           </button>
         </div>
         <div class="modal-body">
-            <form method="POST" action="{{ route('admin.post.store') }}">
+            <form method="POST" action="{{ route('admin.post.store','#create') }}">
                 @csrf
             <div class="form-group">
                 <label for="exampleInputEmail1"></label>
-                <input type="text" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}"  name="title" id="exampleInputEmail1" placeholder="Enter title">
+                <input type="text" id="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}"  name="title" id="exampleInputEmail1" placeholder="Enter title">
                 @error('title')
                 <span class="error invalid-feedback">{{ $message }}</span>
                   @enderror
@@ -29,6 +29,26 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+@push('scripts')
+<script>
+    if (window.location.hash === '#create') {
+        $('#modal-crear-post').modal('show');
+    }
+
+    $('#modal-crear-post').on('hide.bs.modal',function(){
+        window.location.hash='#';
+        // console.log('el modal se ha cerrado');
+    });
+    $('#modal-crear-post').on('shown.bs.modal',function(){
+        $('#title').focus();
+        window.location.hash='#create';
+        // console.log('el modal se ha cerrado');
+    });
+
+</script>
+
+@endpush
 <!-- /.modal -->
 
 {{--

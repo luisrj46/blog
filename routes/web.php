@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\PostController as AdminPost;
 use App\Http\Controllers\Admin\PhotosController as AdminPhotos;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PosController;
+use App\Http\Controllers\TagController;
 use App\Models\Photo;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PosController::class, 'index'])->name('inicio');
 Route::get('/post/{post}', [PosController::class, 'show'])->name('post.ver');
+Route::get('posts/categories/{category}', [CategoryController::class, 'show'])->name('category.ver');
+Route::get('posts/tags/{tag}', [TagController::class, 'show'])->name('tag.ver');
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/post', [AdminPost::class, 'index'])->name('admin.post.index');
@@ -26,6 +30,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::post('/post', [AdminPost::class, 'store'])->name('admin.post.store');
     Route::get('/post/{post}', [AdminPost::class, 'edit'])->name('admin.post.edit');
     Route::put('/post/{post}', [AdminPost::class, 'update'])->name('admin.post.update');
+    Route::delete('/post/{post}', [AdminPost::class, 'destroy'])->name('admin.post.destroy');
+
+
     Route::post('/posts/{post}/photos', [AdminPhotos::class, 'store'])->name('admin.post.photos.store');
 
     Route::delete('/posts/{photo}', [AdminPhotos::class, 'destroy'])->name('admin.photo.destroy');

@@ -41,9 +41,14 @@
                     <td>{{$post->title}}</td>
                     <td>{{$post->excerpt}}</td>
                     <td>
-                        <a href="#" class="btn btn-xs btn-warning"><i class="fas fa-eye"></i></a>
+                        <a href="{{ route('post.ver', [$post]) }}" target="_blank" class="btn btn-xs btn-warning"><i class="fas fa-eye"></i></a>
                         <a href="{{ route('admin.post.edit', [$post]) }}" class="btn btn-xs btn-info"><i class="fas fa-pencil-alt"></i></a>
-                        <a href="#" class="btn btn-xs btn-danger"><i class="fas fa-times"></i></a>
+                        <form method="POST" action="{{ route('admin.post.destroy', [$post]) }}" style="display: inline">
+                            @csrf
+                            @method('DELETE')
+                            <button onclick="return confirm('Esta seguro de cancelar el post definitivamente?')" href="#" class="btn btn-xs btn-danger"><i class="fas fa-times"></i></button>
+
+                        </form>
                     </td>
                 </tr>
             @endforeach

@@ -27,10 +27,18 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" data-toggle="modal" data-target="#modal-crear-post" class="nav-link {{request()->is('admin/post.crear')?'active':''}}">
-              <i class="far fa-edit nav-icon"></i>
-              <p>Crear</p>
-            </a>
+              @if (request()->is('admin/post/*'))
+              <a href="{{ route('admin.post.index', '#create') }}" class="nav-link {{request()->is('admin/post.crear')?'active':''}}">
+                <i class="far fa-edit nav-icon"></i>
+                <p>Crear</p>
+              </a>
+              @else
+              <a href="#" data-toggle="modal" data-target="#modal-crear-post" class="nav-link {{request()->is('admin/post.crear')?'active':''}}">
+                <i class="far fa-edit nav-icon"></i>
+                <p>Crear</p>
+              </a>
+              @endif
+
           </li>
         </ul>
       </li>

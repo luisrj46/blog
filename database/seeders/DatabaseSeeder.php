@@ -8,6 +8,7 @@ use App\Models\PosTag;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         // Category::truncate();
+        Storage::disk('public')->deleteDirectory('posts');
         Category::factory(5)->create();
 //
         // Pos::truncate();

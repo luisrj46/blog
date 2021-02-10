@@ -76,6 +76,11 @@ header nav li a:hover {
     margin: 0 5px;
 }
 
+.tags .tag a {
+    color: inherit;
+    font-size: inherit;
+}
+
 .post footer {
     margin-top: 45px;
     background: none;
@@ -343,6 +348,11 @@ a.btn-bar {
     color: white;
     font-size: 30px;
     background-color: rgba(0, 0, 0, .7);
+}
+
+.post-category a {
+    color: inherit;
+    font-size: inherit;
 }
 
 

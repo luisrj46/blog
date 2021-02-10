@@ -8,7 +8,7 @@
 @section('content')
 <article class="post image-w-text container">
     @if ($post->photos->count()===1)
-    <figure><img src="{{$post->photos->first()->url}}" alt="" class="img-responsive">
+    <figure><img src="{{url($post->photos->first()->url)}}" alt="" class="img-responsive">
     </figure>
     @elseif($post->photos->count()>1)
     <div   id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -41,6 +41,11 @@
           <span class="sr-only">Next</span>
         </a>
       </div>
+    @elseif($post->iframe)
+            <div class="video">
+                {!!$post->iframe!!}
+			</div>
+
     @endif
 
       <div class="content-post">

@@ -266,7 +266,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src={{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}></script>
 <!-- AdminLTE App -->
 <script src={{ asset('admin/dist/js/adminlte.min.js') }}></script>
+@unless (request()->is('admin/post/*'))
+    @include('admin.post.create')
+
+@endunless
 @stack('scripts')
-@include('admin.post.create')
+
+
 </body>
 </html>

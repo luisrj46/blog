@@ -16,9 +16,10 @@ class CreatePosTable extends Migration
         Schema::create('pos', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->mediumText('url');
+            $table->mediumText('url')->nullable();
             $table->mediumText('excerpt')->nullable();
             $table->longText('body')->nullable();
+            $table->longText('iframe')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->nullable();

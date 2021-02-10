@@ -65,6 +65,13 @@
                         <span class="error invalid-feedback">{{ $message }}</span>
                           @enderror
                     </div>
+                    <div class="form-group ">
+                        <label for="iframe">Iframe</label>
+                        <textarea  class="form-control @error('iframe') is-invalid @enderror" name="iframe"   rows="3">{{ old('iframe',$post->iframe) }}</textarea>
+                        @error('iframe')
+                        <span class="error invalid-feedback">{{ $message }}</span>
+                          @enderror
+                    </div>
 
 
                 </div>
@@ -84,7 +91,7 @@
                     </div>
                     <div class="form-group">
                     <label>Categorias </label>
-                    <select class="form-control @error('category_id') is-invalid @enderror" name="category_id" id="categorias">
+                    <select class="form-control select2 @error('category_id') is-invalid @enderror" name="category_id" id="categorias">
                         <option value="" selected disabled>Seleccione Una Categoria</option>
                         @foreach ($categorias as $cat)
                     <option value="{{$cat->id}}"
@@ -136,7 +143,7 @@
         </form>
 
         </div>
-        <!-- /.card-body -->
+        <!-- /.card-iframe -->
 
     </div>
     <!-- /.card -->
@@ -172,7 +179,11 @@
 <!-- bootstrap color picker -->
     <script>
          //Initialize Select2 Elements
-    $('.select2').select2()
+    $('.select2').select2({
+        tags:true,
+
+    }
+    )
         //Date range picker
         $('#reservationdate').datetimepicker({
             format: 'L'
