@@ -26,7 +26,6 @@ class PostStoreResquest extends FormRequest
         return [
             'title'=>'required',
             'body'=>'required',
-            'published_at'=>'required',
             'category_id'=>'required',
             'tags'=>'required',
             'excerpt'=>'required'

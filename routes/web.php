@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PosController::class, 'index'])->name('inicio');
+Route::get('/nosotros', [PosController::class, 'about'])->name('inicio.nosotros');
+Route::get('/archivos', [PosController::class, 'archive'])->name('inicio.archivos');
+Route::get('/contactos', [PosController::class, 'contact'])->name('inicio.contactos');
+
 Route::get('/post/{post}', [PosController::class, 'show'])->name('post.ver');
 Route::get('posts/categories/{category}', [CategoryController::class, 'show'])->name('category.ver');
 Route::get('posts/tags/{tag}', [TagController::class, 'show'])->name('tag.ver');

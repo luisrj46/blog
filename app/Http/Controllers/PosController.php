@@ -15,13 +15,26 @@ class PosController extends Controller
 
         $posts=Pos::published()->paginate(5);
 
-        return view('welcome',compact('posts'));
+        return view('pages.index',compact('posts'));
     }
 
     public function show(Pos $post)
     {
         return view('post.view',compact('post'));
     }
+
+    public function about()
+    {
+        return view('pages.about');
+    }
+    public function archive()
+        {
+            return view('pages.archive');
+        }
+    public function contact()
+        {
+            return view('pages.contact');
+        }
 
 
 }

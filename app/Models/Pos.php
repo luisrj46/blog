@@ -50,6 +50,7 @@ class Pos extends Model
         return $post;
     }
 
+
     public function generateUrl()
     {
         $url=Str::slug($this->title);

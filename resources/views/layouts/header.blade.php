@@ -17,21 +17,7 @@
 </head>
 <body>
 	<div class="preload"></div>
-	<header class="space-inter">
-		<div class="container container-flex space-between">
-			<figure class="logo"><img src="img/logo.png" alt=""></figure>
-			<nav class="custom-wrapper" id="menu">
-				<div class="pure-menu"></div>
-				<ul class="container-flex list-unstyled">
-					<li><a href="{{ route('inicio') }}" class="text-uppercase">Home</a></li>
-					<li><a href="about.html" class="text-uppercase">About</a></li>
-					<li><a href="archive.html" class="text-uppercase">Archive</a></li>
-					<li><a href="contact.html" class="text-uppercase">Contact</a></li>
-				</ul>
-			</nav>
-        </div>
-
-    </header>
+    @include('partials.nav')
     @yield('content')
 
     <section class="footer">

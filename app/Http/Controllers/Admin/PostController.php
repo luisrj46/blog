@@ -54,7 +54,7 @@ class PostController extends Controller
         // $post->category_id=$request->get('category_id');
         // $post->save();
         $post->update($request->all());
-
+        $post->generateUrl();
         $post->syncTags($request->get('tags'));
 
         return redirect()->route('admin.post.edit',[$post])->with('flash', 'La publicacion ha sido Guardads');
