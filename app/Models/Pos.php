@@ -5,12 +5,15 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
+use function PHPUnit\Framework\isNull;
 
 class Pos extends Model
 {
     use HasFactory;
+
     protected static function boot()
     {
         parent::boot();
@@ -31,6 +34,7 @@ class Pos extends Model
         'url',
         'iframe',
         'category_id',
+        'user_id',
         'excerpt',
         'published_at'
     ];
@@ -41,8 +45,10 @@ class Pos extends Model
 
     protected $dates=['published_at'];
 
+    // protected $whith=;
     public static function create(array $attributes=[])
     {
+        $attributes['user_id']=Auth::user()->id;
         $post=static::query()->create($attributes);
 
         $post->generateUrl();
@@ -83,11 +89,40 @@ class Pos extends Model
         return $this->hasMany(Photo::class);
     }
 
+    public function owner()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+
+
+    public function scopeByYearAndMonth($query){
+        return $query->selectRaw('year(published_at) year' )
+                    ->selectRaw('month(published_at) month')
+                    ->selectRaw('monthname(published_at) monthname')
+                    ->selectRaw('count(*) posts')
+                    ->groupBy('year','month','monthname','published_at');
+    }
     public function scopePublished($query)
     {
-        $query->whereNotNull('published_at')
+        $query->with(['category','tags','photos','owner'])
+        ->whereNotNull('published_at')
         ->where('published_at','<=',Carbon::now())
         ->latest('published_at');
+    }
+
+    public function scopeAllowed($query)
+    {
+        if(Auth::user()->can('view',$this)){
+            return $query;
+        }
+        else
+        {
+            return $query->where('user_id',Auth::id());
+        }
+    }
+    public function isPublished()
+    {
+        return (bool) ! isNull($this->published_at) && $this->$published_at < today();
     }
 
     // public function setTitleAttribute($value) #mutador
@@ -112,5 +147,17 @@ class Pos extends Model
             return Tag::find($tag)? $tag : Tag::create(['name'=>$tag])->id;
         });
         return $this->tags()->sync($tagIds);
+    }
+    public function viewType($home='')
+    {
+        if ($this->photos->count()===1):
+            return('post.photo');
+        elseif($this->photos->count()>1):
+            return $home==='home' ?'post.carusel-preview':'post.carusel';
+        elseif($this->iframe):
+            return('post.iframe');
+        else:
+            return('post.text');
+        endif;
     }
 }

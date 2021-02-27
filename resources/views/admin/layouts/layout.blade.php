@@ -149,7 +149,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <li class="nav-item">
 
       <button class="nav-link">
-            <div>{{ Auth::user()->name }}</div>
+            <div>{{ Auth::user()->name }} - {{ Auth::user()->getRoleDisplayName() }}</div>
 
             <div class="ml-1">
                 {{-- <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -188,7 +188,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src={{ asset('admin/dist/img/user2-160x160.jpg')}} class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-        <a href="#" class="d-block">{{Auth()->user()->name}}</a>
+        <a href="#" class="d-block">{{Auth()->user()->name}} - {{ Auth::user()->roles->first()->name }}</a>
         </div>
       </div>
 

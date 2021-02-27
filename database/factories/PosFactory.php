@@ -4,6 +4,7 @@ namespace Database\Factories;
 use Illuminate\Support\Str;
 use App\Models\Category;
 use App\Models\Pos;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PosFactory extends Factory
@@ -31,6 +32,7 @@ class PosFactory extends Factory
             'body'=>$this->faker->paragraph,
             'published_at'=>now(),
             'category_id'=>Category::all()->random()->id,
+            'user_id'=>User::all()->random()->id,
 
 
         ];

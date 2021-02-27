@@ -5,62 +5,38 @@
         @if (isset($title))
             <h3>{{$title}}</h3>
         @endif
-        @foreach ($posts as $post)
-		<article class="post conteiner a11y-speak-region">
-            @if ($post->photos->count()===1)
-                <figure><img src="{{$post->photos->first()->url}}" alt="" class="img-responsive"></figure>
-            @elseif($post->photos->count()>1)
-                <div class="gallery-photos" data-masonry='{"itemSelector":"grid-item","columWhidth":"464"}'>
-					@foreach ($post->photos->take(4) as $photos)
 
-                        <figure class="grid-item grid-item--height2">
+        @forelse ($posts as $post)
+		<article class="post image-w-text container">
 
+            @include($post->viewType('home'))
 
-                            <img class="img-responsive" src="{{url($photos->url)}}" alt="">
-                            @if ($loop->iteration === 4)
-                            <div class="overlay">{{$post->photos->count()}} Fotos</div>
-                            @endif
-						</figure>
-
-                    @endforeach
-                </div>
-
-            @elseif($post->iframe)
-            <div class="video">
-                {!!$post->iframe!!}
-			</div>
-
-            @endif
 			<div class="content-post">
-				<header class="container-flex space-between">
-					<div class="date">
-						<span class="c-gray-1">{{$post->published_at->format('M d')}}</span>
-					</div>
-					<div class="post-category">
-						<a href="{{ route('category.ver', [$post->category]) }}" class="category text-capitalize">{{$post->category->name}}</a>
-					</div>
-				</header>
-            <h1>{{$post->title}}</h1>
-                <div class="divider"></div>
-                <div>
+                @include('post.header')
+                <h1>{{$post->title}}</h1>
+                    <div class="divider"></div>
+                    <div>
 
-                    <p>{!!$post->body !!}</p>
-                </div>
-				<footer class="container-flex space-between">
+                        <p>{!!$post->body !!}</p>
+                    </div>
+				    <footer class="container-flex space-between">
 					<div class="read-more">
 						<a href="{{ route('post.ver', [$post]) }}" class="text-uppercase c-green">Leer Mas</a>
 					</div>
-					<div class="tags container-flex">
-                        @foreach ($post->tags as $tag)
-                            <span class="tag c-gray-1 text-capitalize"><a href="{{ route('tag.ver', [$tag]) }}">#{{$tag->name}}</a>  </span>
-
-                        @endforeach
-
-					</div>
-				</footer>
-			</div>
+                    @include('post.tags')
+				    </footer>
+            </div>
         </article>
-        @endforeach
+
+        @empty
+        <article class="post image-w-text container">
+
+			<div class="content-post">
+                <h1>Aun no hay Publicaciones</h1>
+            </div>
+        </article>
+
+        @endforelse
 
 
 
@@ -74,6 +50,6 @@
 		</ul>
     </div> --}}
 
-    {{$posts->links('vendor.pagination.default')}}
+    {{$posts->appends(request()->all())->links('vendor.pagination.default')}}
 
 @stop

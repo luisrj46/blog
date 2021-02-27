@@ -2,25 +2,18 @@
 @extends('admin.layouts.layout')
 
 @section('headerr')
-<div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h1 class="m-0">Starter Page</h1>
-      </div><!-- /.col -->
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Inicio</a></li>
-          <li class="breadcrumb-item active">Post</li>
-        </ol>
-      </div><!-- /.col -->
-    </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
+    @include('admin.layouts.partials.starterPage',$pages=[
+    ['name'=>'Listar Post','route'=>'admin.post.index'],
+    ])
 @endsection
 @section('contentt')
 <div class="card">
     <div class="card-header">
       <h3 class="card-title">Listado de Publicaciones</h3>
-      <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal-crear-post"><i class="fas fa-plus px-1"></i>Crear Publicacion</button>
+      @can('create', $posts->first())
+        <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal-crear-post"><i class="fas fa-plus px-1"></i>Crear Publicacion</button>
+      @endcan
+
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -41,14 +34,23 @@
                     <td>{{$post->title}}</td>
                     <td>{{$post->excerpt}}</td>
                     <td>
-                        <a href="{{ route('post.ver', [$post]) }}" target="_blank" class="btn btn-xs btn-warning"><i class="fas fa-eye"></i></a>
-                        <a href="{{ route('admin.post.edit', [$post]) }}" class="btn btn-xs btn-info"><i class="fas fa-pencil-alt"></i></a>
-                        <form method="POST" action="{{ route('admin.post.destroy', [$post]) }}" style="display: inline">
-                            @csrf
-                            @method('DELETE')
-                            <button onclick="return confirm('Esta seguro de cancelar el post definitivamente?')" href="#" class="btn btn-xs btn-danger"><i class="fas fa-times"></i></button>
+                        @can('show', $post)
+                            <a href="{{ route('post.ver', [$post]) }}" target="_blank" class="btn btn-xs btn-warning"><i class="fas fa-eye"></i></a>
+                        @endcan
+                        @can('update', $post)
 
-                        </form>
+                            <a href="{{ route('admin.post.edit', [$post]) }}" class="btn btn-xs btn-info"><i class="fas fa-pencil-alt"></i></a>
+                        @endcan
+                        @can('delete', $post)
+
+                            <form method="POST" action="{{ route('admin.post.destroy', [$post]) }}" style="display: inline">
+                                @csrf
+                                @method('DELETE')
+                                <button onclick="return confirm('Esta seguro de cancelar el post definitivamente?')" href="#" class="btn btn-xs btn-danger"><i class="fas fa-times"></i></button>
+
+                            </form>
+                        @endcan
+
                     </td>
                 </tr>
             @endforeach
