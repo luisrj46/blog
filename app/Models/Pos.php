@@ -45,6 +45,8 @@ class Pos extends Model
 
     protected $dates=['published_at'];
 
+    protected $appends=['published_date'];
+
     // protected $whith=;
     public static function create(array $attributes=[])
     {
@@ -56,7 +58,9 @@ class Pos extends Model
         return $post;
     }
 
-
+    public function getPublishedDateAttribute(){
+        return optional($this->published_at)->format('M d');
+    }
     public function generateUrl()
     {
         $url=Str::slug($this->title);
@@ -122,7 +126,7 @@ class Pos extends Model
     }
     public function isPublished()
     {
-        return (bool) ! isNull($this->published_at) && $this->$published_at < today();
+        return (bool) ! isNull($this->published_at) && ($this->$published_at < today());
     }
 
     // public function setTitleAttribute($value) #mutador

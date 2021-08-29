@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use App\Models\Category;
 use App\Models\Pos;
 use App\Models\User;
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Auth;
 
 class PosController extends Controller
 {
+    public function spa()
+    {
+        return view('pages.spa');
+    }
 
     public function index()
     {
@@ -29,17 +34,27 @@ class PosController extends Controller
 
         $posts=$query->paginate(5);
 
+        if(request()->wantsJson()){
+            return $posts;
+        }
+
         return view('pages.index',compact('posts'));
     }
 
     public function show(Pos $post)
     {
-        if($post->isPublished() || auth()->check())
+        // return new PostResource($post);//esta opcion es la mas apropiada para las APIS ya que se puede personalizar los datos
+
+        if(!$post->isPublished() || auth()->check())
         {
+            if(request()->wantsJson()){
+                $post->load('owner','category','tags','photos');
+                return $post;
+            }
             return view('post.view',compact('post'));
         }
 
-        abort(404);
+        abort(404,'error al publicar');
 
     }
 
@@ -55,14 +70,17 @@ class PosController extends Controller
             //         ->selectRaw('count(*) posts')
             //         ->groupBy('year','month','monthname')
             //         ->get();
-            $date=Pos::published()->byYearAndMonth()->get();
-            return view('pages.archive',
-            [
+            $date=[
                 'authors'=>User::take(4)->get(),
                 'categories'=>Category::take(7)->get(),
                 'posts'=>Pos::latest()->take(7)->get(),
-                'dates'=>$date
-            ]);
+                'dates'=>Pos::published()->byYearAndMonth()->get(),
+            ];
+
+            if(request()->wantsJson()){
+                return $date;
+            }
+            return view('pages.archive',$date);
         }
     public function contact()
         {

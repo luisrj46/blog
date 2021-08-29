@@ -269,12 +269,16 @@ a.btn-bar {
     padding: 25px 0 0 15px;
 }
 
-.page-contact .form-contact .send-message a {
+.page-contact .form-contact .send-message button {
     display: block;
-    text-decoration: none;
     font-weight: bold;
     margin-top: 25px;
     font-size: 19px;
+    border: none;
+    cursor: pointer;
+    padding: 15px 18px;
+    background-color: #fff;
+    outline: none;
 }
 
 .custom-wrapper {
@@ -353,6 +357,40 @@ a.btn-bar {
 .post-category a {
     color: inherit;
     font-size: inherit;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .5s;
+}
+
+.fade-enter,
+.fade-leave-to
+/* .fade-leave-active below version 2.1.8 */
+
+{
+    opacity: 0;
+}
+
+.slide-fade-enter-active {
+    transition: all .3s ease;
+}
+
+.slide-fade-leave-active {
+    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */
+
+{
+    transform: translateX(10px);
+    opacity: 0;
+}
+
+.page-wraper {
+    min-height: 100vh;
 }
 
 

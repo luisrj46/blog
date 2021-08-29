@@ -9,9 +9,15 @@ class TagController extends Controller
 {
     public function show(Tag $tag)
     {
+        $posts=$tag->posts()->published()->paginate(2);
+
+        if(request()->wantsJson()){
+            return $posts;
+        }
         return view('pages.index',
         [
             'title'=>"Publicaciones de la etiqueta '{$tag->name}'",
-            'posts'=>$tag->posts()->paginate(10)]);
+            'posts'=>$posts
+            ]);
     }
 }

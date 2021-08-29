@@ -55,29 +55,29 @@
                         <label for="exampleInputEmail1">Titulo Publicacion</label>
                         <input type="text" class="form-control @error('title') is-invalid @enderror" value="{{ old('title',$post->title) }}"  name="title" id="exampleInputEmail1" placeholder="Enter title">
                         @error('title')
-                        <span class="error invalid-feedback">{{ $message }}</span>
-                          @enderror
-                      </div>
-                      <div class="form-group ">
+                            <span class="error invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group ">
                         <label for="exampleInputPassword1">Contenido Publicacion</label>
                         <textarea  class="form-control @error('body') is-invalid @enderror" name="body" id="summernote"  rows="10">{{ old('body',$post->body) }}</textarea>
                         @error('body')
-                        <span class="error invalid-feedback">{{ $message }}</span>
-                          @enderror
+                            <span class="error invalid-feedback">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group ">
                         <label for="iframe">Iframe</label>
                         <textarea  class="form-control @error('iframe') is-invalid @enderror" name="iframe"   rows="3">{{ old('iframe',$post->iframe) }}</textarea>
                         @error('iframe')
-                        <span class="error invalid-feedback">{{ $message }}</span>
-                          @enderror
+                            <span class="error invalid-feedback">{{ $message }}</span>
+                        @enderror
                     </div>
 
 
                 </div>
                 <div class="col-md-4">
 
-                  <div class="form-group ">
+                    <div class="form-group ">
                     <label>Fecha Publicación</label>
                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
                         <input type="text" value="{{ old('published_at',$post->published_at ? $post->published_at->format('d/m/Y'):null) }}" name="published_at" class="form-control datetimepicker-input @error('published_at') is-invalid @enderror" data-target="#reservationdate"/>
@@ -85,8 +85,8 @@
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
                         @error('published_at')
-                        <span class="error invalid-feedback">{{ $message }}</span>
-                          @enderror
+                            <span class="error invalid-feedback">{{ $message }}</span>
+                        @enderror
                     </div>
                     </div>
                     <div class="form-group">
@@ -102,27 +102,27 @@
                     </select>
                     @error('category_id')
                         <span class="error invalid-feedback">{{ $message }}</span>
-                          @enderror
+                    @enderror
                     </div>
 
                     <div class="form-group">
-                    <label>Etiquetas</label>
+                        <label>Etiquetas</label>
                         <select class="form-control select2 @error('tags') is-invalid @enderror" name="tags[]"  multiple="multiple" data-placeholder="Seleccione una Etiqueta o mas Etiqueta" style="width: 100%;">
                             @foreach ($etiquetas as $etique)
-                             <option value="{{$etique->id}}" {{collect(old('tags',$post->tags->pluck('id')))->contains($etique->id) ? 'selected':''}} >{{$etique->name}}</option>
+                                <option value="{{$etique->id}}" {{collect(old('tags',$post->tags->pluck('id')))->contains($etique->id) ? 'selected':''}} >{{$etique->name}}</option>
                             @endforeach
 
                         </select>
                         @error('tags')
-                        <span class="error invalid-feedback">{{ $message }}</span>
-                          @enderror
-                      </div>
-                      <div class="form-group">
+                            <span class="error invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputPassword1">Extracto Publicacion</label>
                             <textarea name="excerpt" id="" class="form-control @error('excerpt') is-invalid @enderror"  rows="2">{{ old('excerpt',$post->excerpt) }}</textarea>
                             @error('excerpt')
-                            <span class="error invalid-feedback">{{ $message }}</span>
-                              @enderror
+                                <span class="error invalid-feedback">{{ $message }}</span>
+                            @enderror
                     </div>
 
                 <button type="submit" class="btn btn-primary btn-block">Guardar Publicación</button>
@@ -130,12 +130,13 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                       <div
-                           class="dropzone"
-                           id="my-awesome-dropzone"></div>
-                       {{-- <div class="dropzone"></div> --}}
-                   </div>
-               </div>
+                        <div
+                            class="dropzone"
+                            id="my-awesome-dropzone">
+                        </div>
+                        {{-- <div class="dropzone"></div> --}}
+                    </div>
+                </div>
             </div>
 
 
